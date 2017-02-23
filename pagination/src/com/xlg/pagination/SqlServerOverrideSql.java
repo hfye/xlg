@@ -8,6 +8,11 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * 
+ * @author wernergiam
+ *
+ */
 public class SqlServerOverrideSql implements IOverrideSql {
 	private static final Log LOG = LogFactory.getLog(SqlServerOverrideSql.class);
 	private String limitQuery = ""
