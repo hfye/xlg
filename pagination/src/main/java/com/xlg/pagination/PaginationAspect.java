@@ -4,8 +4,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
  * This aspect provide the mechanism to selectively decorate the persistence api to
- * inject the pagination behavior. It need to work in conjunction with the filter. Generally,
- * we don't specified the pointcut at the persistence layer as we might use the same api
+ * inject the pagination behavior. It need to work in conjunction with {@link PaginationFilter}. 
+ * Generally, we don't specified the pointcut at the persistence layer as we might use the same api
  * for different usage scenario, e.g. batch processing. The pointcut is usually define in the
  * service layer serving the web request.
  * 
@@ -33,7 +33,7 @@ public class PaginationAspect {
 	}
 	
 	public Object paginate(ProceedingJoinPoint pjp) throws Throwable {
-		PagingConfig pagingConfig = ProxyConnection.getPagingConfig();
+		PagingConfig pagingConfig = PagingConfig.getPagingConfig();
 		if (pagingConfig != null) {
 			pagingConfig.setPaginate(true);
 			pagingConfig.setPageSize(pageSize);

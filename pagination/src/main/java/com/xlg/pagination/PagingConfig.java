@@ -4,6 +4,7 @@ public class PagingConfig {
 	private boolean paginate = false;
 	private int pageIndex = 0; //Start from 1
 	private int pageSize = 0;
+	private static final ThreadLocal<PagingConfig> paginationProperties = new ThreadLocal<PagingConfig>();
 	
 	public boolean toPaginate() {
 		if (isPaginate() && getPageIndex() > 0 && getPageSize() > 0) {
@@ -73,5 +74,13 @@ public class PagingConfig {
 	public String toString() {
 		return "Paging [pageIndex=" + pageIndex + ", pageSize=" + pageSize
 				+ ", paginate=" + paginate + "]";
+	}
+
+	public static void setPagingConfig(PagingConfig pagingConfig) {
+		paginationProperties.set(pagingConfig);
+	}
+
+	public static PagingConfig getPagingConfig() {
+		return paginationProperties.get();
 	}
 }

@@ -24,7 +24,7 @@ public class SqlServerOverrideSql implements IOverrideSql {
 
 	@Override
 	public String overrideSql(String sql) {
-		PagingConfig paging = ProxyConnection.getPagingConfig();
+		PagingConfig paging = PagingConfig.getPagingConfig();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Paging config: " + paging);
 		}

@@ -12,7 +12,7 @@ public class Db2OverrideSql implements IOverrideSql {
 
 	@Override
 	public String overrideSql(String sql) {
-		PagingConfig paging = ProxyConnection.getPagingConfig();
+		PagingConfig paging = PagingConfig.getPagingConfig();
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Paging config: " + paging);
 		}
@@ -31,7 +31,7 @@ public class Db2OverrideSql implements IOverrideSql {
 		if (rs == null) {
 			return rs;
 		} else {
-			PagingConfig paging = ProxyConnection.getPagingConfig();
+			PagingConfig paging = PagingConfig.getPagingConfig();
 			if (paging != null && paging.toPaginate()) {
 				if (rs.getType() != ResultSet.TYPE_FORWARD_ONLY) {
 					if (paging.getSkip() > 0) {

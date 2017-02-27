@@ -58,7 +58,7 @@ public class PaginationFilter extends GenericFilterBean {
 					PagingConfig config = new PagingConfig();
 					config.setPageIndex(index);
 					
-					ProxyConnection.setPagingConfig(config);
+					PagingConfig.setPagingConfig(config);
 					break;
 				}
 			}
@@ -67,7 +67,7 @@ public class PaginationFilter extends GenericFilterBean {
 		} catch (Exception e) {
 			LOG.error("Error filtering pagination request. URI:" + req.getRequestURI(), e);
 		} finally {
-			ProxyConnection.setPagingConfig(null);
+			PagingConfig.setPagingConfig(null);
 		}
 	}
 

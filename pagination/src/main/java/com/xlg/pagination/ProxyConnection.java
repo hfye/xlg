@@ -32,7 +32,6 @@ public class ProxyConnection implements Connection {
 	@SuppressWarnings("unused")
 	private static final Log LOG = LogFactory.getLog(ProxyConnection.class);
 	private Connection connection;
-	private static final ThreadLocal<PagingConfig> paginationProperties = new ThreadLocal<PagingConfig>();
 	private IOverrideSql overrideSql;
 	
 	public Connection getConnection() {
@@ -51,14 +50,6 @@ public class ProxyConnection implements Connection {
 		this.overrideSql = overrideSql;
 	}
 	
-	public static PagingConfig getPagingConfig() {
-		return paginationProperties.get();
-	}
-	
-	public static void setPagingConfig(PagingConfig pagingConfig) {
-		paginationProperties.set(pagingConfig);
-	}
-
 	/**
 	 * @param sql
 	 * @param resultSetType
