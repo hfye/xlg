@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.NClob;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -63,7 +62,7 @@ public class ProxyConnection implements Connection {
 	public PreparedStatement prepareStatement(String sql, int resultSetType,
 			int resultSetConcurrency, int resultSetHoldability)
 			throws SQLException {
-		PreparedStatement preparedStatement = getConnection().prepareStatement(overrideSql(sql), resultSetType,
+		PreparedStatement preparedStatement = connection.prepareStatement(overrideSql(sql), resultSetType,
 				resultSetConcurrency, resultSetHoldability);
 		return preparedStatement;
 	}
@@ -79,7 +78,7 @@ public class ProxyConnection implements Connection {
 	@Override
 	public PreparedStatement prepareStatement(String sql, int resultSetType,
 			int resultSetConcurrency) throws SQLException {
-		return prepareStatement(sql, resultSetType, resultSetConcurrency, ResultSet.CLOSE_CURSORS_AT_COMMIT);
+		return connection.prepareStatement(overrideSql(sql), resultSetType, resultSetConcurrency);
 	}
 	
 	/**
@@ -90,7 +89,7 @@ public class ProxyConnection implements Connection {
 	 */
 	@Override
 	public PreparedStatement prepareStatement(String sql) throws SQLException {
-		return prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+		return connection.prepareStatement(overrideSql(sql));
 	}
 	
 	/**

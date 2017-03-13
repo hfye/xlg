@@ -14,7 +14,7 @@ public class PagingConfig {
 	}
 	
 	public int getBeginIndex() {
-		return 0;
+		return (getPageIndex() - 1) * getPageSize();
 	}
 	
 	public int getEndIndex() {

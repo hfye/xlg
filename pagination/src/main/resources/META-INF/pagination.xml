@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean 
+		id="dataSource" 
+		class="com.xlg.pagination.ProxyDataSource">
+		<property name="dataSource" ref="${delegate.datasource}"></property>
+	</bean>
+	
+    <bean id="proxyPageConnection" class="com.xlg.pagination.ProxyConnection" scope="prototype">
+    	<property name="overrideSql" ref="${db.type}OverrideSql"/>
+    </bean>
+    
+    <bean id="postgresqlOverrideSql" class="com.xlg.pagination.PostgreSqlOverrideSql"/>
+    
+    <bean id="sqlserverOverrideSql" class="com.xlg.pagination.SqlServerOverrideSql"/>
+    
+    <bean id="db2OverrideSql" class="com.xlg.pagination.Db2OverrideSql"/>
+</beans> 
+        

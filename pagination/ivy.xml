@@ -25,13 +25,16 @@
         status="integration">
 	</info>
 	<dependencies>
-		<dependency org="org.springframework" name="spring-context" rev="4.3.6.RELEASE" conf="default->master" />
-		<dependency org="org.springframework" name="spring-core" rev="4.3.6.RELEASE" conf="default->master" />
-		<dependency org="org.springframework" name="spring-beans" rev="4.3.6.RELEASE" conf="default->master" />
-		<dependency org="org.springframework" name="spring-web" rev="4.3.6.RELEASE" conf="default->master" />
-		<dependency org="commons-logging" name="commons-logging" rev="1.2" conf="default->master" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.6" conf="default->master" />
-		<dependency org="org.aspectj" name="aspectjweaver" rev="1.8.10" conf="default->master" />
-		<dependency org="javax.servlet" name="javax.servlet-api" rev="3.1.0" conf="default->master" />
+		<dependency org="org.springframework" name="spring-context" rev="4.3.6.RELEASE" />
+		<dependency org="org.springframework" name="spring-core" rev="4.3.6.RELEASE" />
+		<dependency org="org.springframework" name="spring-beans" rev="4.3.6.RELEASE" />
+		<dependency org="org.springframework" name="spring-web" rev="4.3.6.RELEASE" />
+		<dependency org="commons-logging" name="commons-logging" rev="1.2" />
+		<dependency org="org.aspectj" name="aspectjweaver" rev="1.8.10" />
+		<dependency org="javax.servlet" name="javax.servlet-api" rev="3.1.0" />
+		<dependency org="org.springframework" name="spring-test" rev="4.3.6.RELEASE"/>
+		<dependency org="org.postgresql" name="postgresql" rev="42.0.0"/>
+		<dependency org="com.microsoft.sqlserver" name="mssql-jdbc" rev="6.1.0.jre8"/>
+		<dependency org="commons-dbcp" name="commons-dbcp" rev="1.4"/>
 	</dependencies>
 </ivy-module>
