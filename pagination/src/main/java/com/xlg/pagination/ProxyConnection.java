@@ -23,6 +23,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
+ * A wrapper around the underlying JDBC {@link Connection} to intercept the method call to obtain a {@link PreparedStatement}.
+ * Note, only {@link PreparedStatement} are intercepted.
  * @author wernergiam73
  *
  */
@@ -50,11 +52,12 @@ public class ProxyConnection implements Connection {
 	}
 	
 	/**
+	 * To intercept the sql and override with optimise pagination component.
 	 * @param sql
 	 * @param resultSetType
 	 * @param resultSetConcurrency
 	 * @param resultSetHoldability
-	 * @return
+	 * @return the sql and overridden with optimise pagination component
 	 * @throws SQLException
 	 * @see java.sql.Connection#prepareStatement(java.lang.String, int, int, int)
 	 */
@@ -68,10 +71,11 @@ public class ProxyConnection implements Connection {
 	}
 
 	/**
+	 * To intercept the sql and override with optimise pagination component.
 	 * @param sql
 	 * @param resultSetType
 	 * @param resultSetConcurrency
-	 * @return
+	 * @return the sql and overridden with optimise pagination component
 	 * @throws SQLException
 	 * @see java.sql.Connection#prepareStatement(java.lang.String, int, int)
 	 */
@@ -82,8 +86,9 @@ public class ProxyConnection implements Connection {
 	}
 	
 	/**
+	 * To intercept the sql and override with optimise pagination component.
 	 * @param sql
-	 * @return
+	 * @return the sql and overridden with optimise pagination component
 	 * @throws SQLException
 	 * @see java.sql.Connection#prepareStatement(java.lang.String)
 	 */

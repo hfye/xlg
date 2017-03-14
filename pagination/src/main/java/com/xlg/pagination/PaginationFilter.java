@@ -18,7 +18,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 /**
  * This filter provides a convenient way to intercept the URL and inject the page index
- * the user is requesting into the framework, i.e. to propagate the page index in
+ * the user is requesting into the framework, i.e.&nbsp;to propagate the page index in
  * the URL via query parameter into {@link java.lang.ThreadLocal}.
  *  
  * @author wernergiam

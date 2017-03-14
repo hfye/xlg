@@ -14,6 +14,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * A wrapper around the underlying {@link DataSource} to intercept the method call
+ * to obtain a connection. The connection return is another wrapper connection which will
+ * depend on the {@link IOverrideSql} to intercept the sql pass and override.
+ * @author wernergiam
+ *
+ */
 public class ProxyDataSource implements DataSource, ApplicationContextAware {
 	//Start of the implementation
 	@SuppressWarnings("unused")
@@ -35,7 +42,7 @@ public class ProxyDataSource implements DataSource, ApplicationContextAware {
 	}
 
 	/**
-	 * @return
+	 * @return a proxied connection which has the {@link IOverrideSql} wired
 	 * @throws SQLException
 	 * @see javax.sql.DataSource#getConnection()
 	 */
@@ -46,7 +53,7 @@ public class ProxyDataSource implements DataSource, ApplicationContextAware {
 	/**
 	 * @param username
 	 * @param password
-	 * @return
+	 * @return a proxied connection which has the {@link IOverrideSql} wired
 	 * @throws SQLException
 	 * @see javax.sql.DataSource#getConnection(java.lang.String, java.lang.String)
 	 */

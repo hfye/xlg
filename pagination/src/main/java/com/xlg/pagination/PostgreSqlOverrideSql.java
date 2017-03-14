@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * A concrete implementation done for PostgreSQL.
+ * @author wernergiam
+ *
+ */
 public class PostgreSqlOverrideSql implements IOverrideSql {
 	private static final Log LOG = LogFactory.getLog(PostgreSqlOverrideSql.class);
 	private String limitQuery = "LIMIT %1$d OFFSET %2$d";

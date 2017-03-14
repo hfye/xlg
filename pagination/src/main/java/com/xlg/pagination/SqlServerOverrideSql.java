@@ -9,7 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 
+ * A concrete implementation done for SQL Server.
  * @author wernergiam
  *
  */

@@ -1,5 +1,10 @@
 package com.xlg.pagination;
 
+/**
+ * A placeholder to stored all the info needed for a pagination use case.
+ * @author wernergiam
+ *
+ */
 public class PagingConfig {
 	private boolean paginate = false;
 	private int pageIndex = 0; //Start from 1

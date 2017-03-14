@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * A concrete implementation done for db2.
+ * @author wernergiam
+ *
+ */
 public class Db2OverrideSql implements IOverrideSql {
 	private static final Log LOG = LogFactory.getLog(Db2OverrideSql.class);
 	private String limitQuery = "FETCH FIRST %d ROWS ONLY OPTIMIZE FOR %d ROWS";
