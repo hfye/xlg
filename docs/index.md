@@ -14,7 +14,9 @@ To properly address the Pagination use case we need to understand the pain the d
 Extracting the page to fetch might not be difficult, a simple filter will do, however the propagating of the info across various application layer down to the DAO layer without the need to introduce api changes to accommodate the additional parameter is the key. Here we make use of the [ThreadLocal](http://tutorials.jenkov.com/java-concurrency/threadlocal.html) to propagate the information across various application layer. Next, it is the task of writing the sql which is optimise for each DB it is working on.
 
 ## Design
-The idea we came about to address this feature comprise 3 component, i.e.
+The idea we came about to address this feature comprises 3 component, i.e.
 1. The use of __ThreadLocal__ to propagate our information across various application layer.
 2. The use of __AOP__. This is a classic case of cross cutting concern. With the help of __AOP__ we can selectively indicate whether a specific __DAO__ api should have a __Pagination__ behavior.
-3. The use of __Proxy Pattern__. A proxied data source with a real delegate data source. The proxied data source will construct a connection object that has the capacity to override the sql with pagination qualifiers via `prepareStatement` api.
+3. The use of __Proxy Pattern__. A proxied data source with a real delegate data source serve as a factory to construct a connection object that has the capacity to override the sql with pagination qualifiers pertaining to the underlying DB used. All method call to the following api  `Connection.prepareStatement(String sql)`, `Connection.prepareStatement(String sql, int resultSetType, int resultSetConcurrency)`, `Connection.prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)`, will override the sql given. 
+
+E.g. with given sql statement of `select test_date, test_id from test_table order by test_date, test_id`, the resulting sql on postgresql will be `select test_date, test_id from test_table order by test_date, test_id LIMIT 10 OFFSET 0`, given page size 10.
