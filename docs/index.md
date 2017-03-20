@@ -20,3 +20,56 @@ The idea we came about to address this feature comprises 3 component, i.e.
 3. The use of __Proxy Pattern__. A proxied data source with a real delegate data source serve as a factory to construct a connection object that has the capacity to override the sql with pagination qualifiers pertaining to the underlying DB used. All method call to the following api  `Connection.prepareStatement(String sql)`, `Connection.prepareStatement(String sql, int resultSetType, int resultSetConcurrency)`, `Connection.prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)`, will override the sql given. 
 
 E.g. with given sql statement of `select test_date, test_id from test_table order by test_date, test_id`, the resulting sql on postgresql will be `select test_date, test_id from test_table order by test_date, test_id LIMIT 10 OFFSET 0`, given page size 10.
+
+# User Guide
+## Introduction
+The XLG server side __Pagination__ component is design to be non intrusive to adopt although it is design for use in Spring Framework java. The core concept is to intercept and override SQL to inject pagination qualifiers at the jdbc level. With the help of __ThreadLocal__ we can propagate pagination required info across application layer without modification of existing api.
+
+## Quick Start
+The XLG server side __Pagination__ component is tested using Spring Framework java and the integration test cases is build on Spring Framework java as well. To start using in spring web application you generally need to,
+1. Define a filter in web.xml with reference to `com.xlg.pagination.PaginationFilter`,
+```XML
+	<filter>
+		<filter-name>paginationFilterChain</filter-name>
+		<filter-class>com.xlg.pagination.PaginationFilter</filter-class>
+	</filter>
+```
+The filter will look for a query parameter named, `page`, and if it exist it will setup a `com.xlg.pagination.PagingConfig` in the __ThreadLocal__ to be access later in `com.xlg.pagination.ProxyConnection` and `com.xlg.pagination.PaginationAspect`.
+
+2. Configure a data source which will act as a delegate to provide the DB connection. Pls refrain assigning `dataSource` as a bean name for the delegate data source. Generally, we will named it `delegateDataSource`. E.g. with a DBCP configuration,
+```XML
+	<bean 
+		id="delegateDataSource" 
+		class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}"/>
+		<property name="initialSize" value="${jdbc.pool.initialSize}"/>
+		<property name="maxActive" value="${jdbc.pool.maxActive}"/>
+		<property name="maxIdle" value="${jdbc.pool.maxIdle}"/>
+		<property name="minIdle" value="${jdbc.pool.minIdle}"/>
+		<property name="maxWait" value="${jdbc.pool.maxWait}"/>
+		<property name="validationQuery" value="${jdbc.conn.validationQuery}"/>
+		<property name="testOnBorrow" value="${jdbc.conn.testOnBorrow}"/>
+		<property name="testOnReturn" value="${jdbc.conn.testOnReturn}"/>
+		<property name="testWhileIdle" value="${jdbc.conn.testWhileIdle}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.conn.timeBetweenEvictionRunsMillis}"/>
+		<property name="numTestsPerEvictionRun" value="${jdbc.conn.numTestsPerEvictionRun}"/>
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.conn.minEvictableIdleTimeMillis}"/>
+		<property name="accessToUnderlyingConnectionAllowed" value="${jdbc.conn.accessToUnderlyingConnectionAllowed}"/>
+		<property name="removeAbandoned" value="${jdbc.conn.removeAbandoned}"/>
+		<property name="removeAbandonedTimeout" value="${jdbc.conn.removeAbandonedTimeout}"/>
+		<property name="logAbandoned" value="${jdbc.conn.logAbandoned}"/>
+		<property name="poolPreparedStatements" value="${jdbc.prep.stmt.poolPreparedStatements}"/>
+		<property name="maxOpenPreparedStatements" value="${jdbc.prep.stmt.maxOpenPreparedStatements}"/>
+	</bean>
+  ```
+
+3. Define a properties `delegate.datasource=delegateDataSource` to wired the delegate data source to the proxy data source.
+4. Define a properties `db.type=postgresql` or `db.type=sqlserver` to wired either `com.xlg.pagination.PostgreSqlOverrideSql` or `com.xlg.pagination.SqlServerOverrideSql`.
+5. Define a AOP either on the service layer or controller of the use case that required pagination to inject pagination on the DAO api needed.
+
+
