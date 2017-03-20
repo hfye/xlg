@@ -1,6 +1,7 @@
 package com.xlg.pagination;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,12 +34,12 @@ public class PaginationFilter extends GenericFilterBean {
 	private static final String DEFAULT_PAGE_INDEX_PARAM = "page";
 	
 	/**
-	 * A list of parameter name to look for as the page index. This is to assist
+	 * A list of comma separated parameter name to look for as the page index. This is to assist
 	 * existing application that uses different parameter
 	 * name as the page index.
 	 */
-	private List<String> pageIndexParams = new LinkedList<String>();
-	private List<String> finalPageIndexParams = null;
+	private String pageIndexParams = "";
+	private List<String> finalPageIndexParams = new LinkedList<String>(Arrays.asList(DEFAULT_PAGE_INDEX_PARAM));
 	
 	/*
 	 * (non-Javadoc)
@@ -71,13 +72,17 @@ public class PaginationFilter extends GenericFilterBean {
 		}
 	}
 
-	public List<String> getPageIndexParams() {
+	public String getPageIndexParams() {
 		return pageIndexParams;
 	}
 
-	public void setPageIndexParams(List<String> pageIndexParams) {
+	public void setPageIndexParams(String pageIndexParams) {
 		this.pageIndexParams = pageIndexParams;
-		this.finalPageIndexParams = new LinkedList<>(pageIndexParams);
-		this.finalPageIndexParams.add(DEFAULT_PAGE_INDEX_PARAM);
+		if (StringUtils.isNotBlank(pageIndexParams)) {
+			String[] entries = StringUtils.split(",");
+			if (entries.length > 0) {
+				this.finalPageIndexParams.addAll(Arrays.asList(entries));
+			}
+		}
 	}
 }
