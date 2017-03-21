@@ -23,7 +23,7 @@ E.g. with given sql statement of `select test_date, test_id from test_table orde
 
 # User Guide
 ## Introduction
-The XLG server side __Pagination__ component is design to be non intrusive to adopt although it is design for use in Spring Framework java. The core concept is to intercept and override SQL to inject pagination qualifiers at the jdbc level. With the help of __ThreadLocal__ we can propagate pagination required info across application layer without modification of existing api.
+The XLG server side __Pagination__ component is design to be non intrusive although it is design for use in Spring Framework java. The core concept is to intercept and override SQL to inject pagination qualifiers at the jdbc level. With the help of __ThreadLocal__ we can propagate pagination required info across application layer without modification of existing api.
 
 ## Quick Start
 The XLG server side __Pagination__ component is tested using Spring Framework java and the integration test cases is build on Spring Framework java as well. To start using in spring web application you generally need to,
