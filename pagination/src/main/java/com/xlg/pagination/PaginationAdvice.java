@@ -3,7 +3,7 @@ package com.xlg.pagination;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
- * This aspect provide the mechanism to selectively decorate the persistence api to
+ * This advice provide the mechanism to selectively decorate the persistence api to
  * inject the pagination behavior. It need to work in conjunction with {@link PaginationFilter}. 
  * Generally, we don't specified the pointcut at the persistence layer as we might use the same api
  * for different usage scenario, e.g. batch processing. The pointcut is usually define in the
@@ -12,7 +12,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
  * @author wernergiam
  *
  */
-public class PaginationAspect {
+public class PaginationAdvice {
 	/**
 	 * To determine the no of entry per page.
 	 */
