@@ -28,6 +28,7 @@ The XLG server side __Pagination__ component is design to be non intrusive altho
 ## Quick Start
 The XLG server side __Pagination__ component is tested using Spring Framework java and the integration test cases is build on Spring Framework java as well. To start using in spring web application you generally need to,
 1. Define a filter in web.xml with reference to `com.xlg.pagination.PaginationFilter`.
+
 ```XML
 <filter>
     <filter-name>paginationFilterChain</filter-name>
@@ -72,6 +73,7 @@ The filter will look for a query parameter named, `page`, and if it exist it wil
 3. Define a properties `delegate.datasource=delegateDataSource` to wired the delegate data source to the proxy data source.
 4. Define a properties `db.type=postgresql` or `db.type=sqlserver` to wired either `com.xlg.pagination.PostgreSqlOverrideSql` or `com.xlg.pagination.SqlServerOverrideSql`.
 5. Define a AOP either on the service layer or controller of the use case that required pagination to inject pagination on the DAO api needed. In this component, advice is provide and it is developer responbility to defined the pointcut and reference the advice. Also, the advice contains the page size info configuration, default is 0, which means no paging. So a non 0 is needed to be configured to enable paging. E.g.
+
 ```XML
 <bean id="publicPaginationAdvice" class="com.xlg.pagination.PaginationAdvice">
     <property name="pageSize" value="10" />
