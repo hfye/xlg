@@ -34,6 +34,7 @@ The XLG server side __Pagination__ component is tested using Spring Framework ja
     <filter-class>com.xlg.pagination.PaginationFilter</filter-class>
 </filter>
 ```
+
 The filter will look for a query parameter named, `page`, and if it exist it will setup a `com.xlg.pagination.PagingConfig` in the __ThreadLocal__ to be access later in `com.xlg.pagination.ProxyConnection` and `com.xlg.pagination.PaginationAdvice`.
 
 2. Configure a data source which will act as a delegate to provide the DB connection. Pls refrain assigning `dataSource` as a bean name for the delegate data source. Generally, we will named it `delegateDataSource`. E.g. with a DBCP configuration,
