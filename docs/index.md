@@ -27,8 +27,7 @@ The XLG server side __Pagination__ component is design to be non intrusive altho
 
 ## Quick Start
 The XLG server side __Pagination__ component is tested using Spring Framework java and the integration test cases is build on Spring Framework java as well. To start using in spring web application you generally need to,
-1. Define a filter in web.xml with reference to `com.xlg.pagination.PaginationFilter`. The filter will look for a query parameter named, `page`, and if it exist it will setup a `com.xlg.pagination.PagingConfig` in the __ThreadLocal__ to be access later in `com.xlg.pagination.ProxyConnection` and `com.xlg.pagination.PaginationAdvice`.
-
+1. Define a filter in web.xml with reference to `com.xlg.pagination.PaginationFilter`. The filter will look for a query parameter named, `page`, and if it exist it will setup a `com.xlg.pagination.PagingConfig` in the __ThreadLocal__ to be access later in `com.xlg.pagination.ProxyConnection` and `com.xlg.pagination.PaginationAdvice`. 
 ```XML
     <filter>
         <filter-name>paginationFilterChain</filter-name>
