@@ -25,6 +25,7 @@
         status="integration">
 	</info>
 	<dependencies>
+		<!--
 		<dependency org="org.springframework" name="spring-context" rev="4.3.6.RELEASE" />
 		<dependency org="org.springframework" name="spring-core" rev="4.3.6.RELEASE" />
 		<dependency org="org.springframework" name="spring-beans" rev="4.3.6.RELEASE" />
@@ -36,5 +37,16 @@
 		<dependency org="org.postgresql" name="postgresql" rev="42.0.0"/>
 		<dependency org="com.microsoft.sqlserver" name="mssql-jdbc" rev="6.1.0.jre8"/>
 		<dependency org="commons-dbcp" name="commons-dbcp" rev="1.4"/>
+		-->
+		<dependency org="org.springframework.boot" name="spring-boot-starter-web" rev="1.5.2.RELEASE"/>
+		<dependency org="org.springframework.boot" name="spring-boot-starter-test" rev="1.5.2.RELEASE" />
+		<dependency org="org.springframework.boot" name="spring-boot-starter-jdbc" rev="1.5.2.RELEASE" />
+		<dependency org="org.springframework.boot" name="spring-boot-starter-log4j2" rev="1.5.2.RELEASE" />
+		<dependency org="org.postgresql" name="postgresql" rev="42.0.0"/>
+		<dependency org="commons-lang" name="commons-lang" rev="2.6"/>
+		<dependency org="org.aspectj" name="aspectjweaver" rev="1.8.10" />
+		<dependency org="com.microsoft.sqlserver" name="mssql-jdbc" rev="6.1.0.jre8"/>
+		<exclude org="ch.qos.logback" name="logback-classic"/>
+		<exclude org="ch.qos.logback" name="logback-core"/>
 	</dependencies>
 </ivy-module>
