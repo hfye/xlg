@@ -12,6 +12,7 @@
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.xlg.pagination.PaginationOverrideSqlTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--debug"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="pagination"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea -Ddb.type=postgresql -Ddelegate.datasource=delegateDataSource"/>
 </launchConfiguration>

@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +31,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:META-INF/pagination_test.xml"})
+@SpringBootTest
 public class PaginationOverrideSqlTest {
 	private static final Log LOG = LogFactory.getLog(PaginationOverrideSqlTest.class);
 
@@ -64,6 +66,7 @@ public class PaginationOverrideSqlTest {
 	@Test
 	public void testPaging() {
 		try {
+			LOG.debug("testPaging start");
 			List<TestTableDto> dtos = new LinkedList<>();
 			PagingConfig config = new PagingConfig();
 			config.setPageIndex(1);
@@ -102,6 +105,8 @@ public class PaginationOverrideSqlTest {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			Assert.fail();
+		} finally {
+			LOG.debug("testPaging end");
 		}
 	}
 	
