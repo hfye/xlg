@@ -1,13 +1,8 @@
 package com.xlg.pagination;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
@@ -18,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -41,20 +35,24 @@ public class PaginationOverrideSqlTest {
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
 	
+	@Autowired
+	ITestTableDao testTableDao;
+	
 	@Before
 	public void setUp() {
 		try {
 			Assert.assertTrue(dataSource != null);
 			Assert.assertTrue(jdbcTemplate != null);
-			int count = jdbcTemplate.queryForObject("select count(*) from test_table", new HashMap<>(), int.class);
+			int count = testTableDao.countAll();
 			if (count == 0) {
 				Date today = new Date();
-				Map<String, Object> params = new HashMap<String, Object>();
-				params.put("testDate", today);
+				TestTableDto dto = new TestTableDto();
+				dto.setTestDate(today);
 				for (int i = 0; i < 50; i++) {
-					params.put("testId", new Integer(i + 1));
-					jdbcTemplate.update("insert into test_table values(:testDate, :testId)", params);
+					dto.setTestId(i + 1);
+					testTableDao.insert(dto);
 				}
+				
 			}
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -62,7 +60,6 @@ public class PaginationOverrideSqlTest {
 		}
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void testPaging() {
 		try {
@@ -74,13 +71,7 @@ public class PaginationOverrideSqlTest {
 			config.setPaginate(true);
 			PagingConfig.setPagingConfig(config);
 			
-			dtos = jdbcTemplate.query("select test_date, test_id from test_table order by test_date, test_id", new RowMapper() {
-	
-				@Override
-				public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-					return new TestTableDto(rs.getDate(1), rs.getInt(2));
-				}
-			});
+			dtos = testTableDao.selectAll();
 			
 			Assert.assertTrue(dtos.size() == config.getPageSize());
 			Assert.assertTrue(dtos.get(0).getTestId() == (((config.getPageIndex() - 1) * config.getPageSize()) + 1));
@@ -91,13 +82,7 @@ public class PaginationOverrideSqlTest {
 			config.setPaginate(true);
 			PagingConfig.setPagingConfig(config);
 			
-			dtos = jdbcTemplate.query("select test_date, test_id from test_table order by test_date, test_id", new RowMapper() {
-	
-				@Override
-				public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-					return new TestTableDto(rs.getDate(1), rs.getInt(2));
-				}
-			});
+			dtos = testTableDao.selectAll();
 			
 			Assert.assertTrue(dtos.size() == config.getPageSize());
 			Assert.assertTrue(dtos.get(0).getTestId() == (((config.getPageIndex() - 1) * config.getPageSize()) + 1));
@@ -107,33 +92,6 @@ public class PaginationOverrideSqlTest {
 			Assert.fail();
 		} finally {
 			LOG.debug("testPaging end");
-		}
-	}
-	
-	public class TestTableDto {
-		Date testDate;
-		int testId;
-		
-		public TestTableDto(Date testDate, int testId) {
-			super();
-			this.testDate = testDate;
-			this.testId = testId;
-		}
-		
-		public Date getTestDate() {
-			return testDate;
-		}
-		
-		public void setTestDate(Date testDate) {
-			this.testDate = testDate;
-		}
-		
-		public int getTestId() {
-			return testId;
-		}
-		
-		public void setTestId(int testId) {
-			this.testId = testId;
 		}
 	}
 }
