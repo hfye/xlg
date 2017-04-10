@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean 
 		id="dataSource" 
-		class="com.xlg.pagination.ProxyDataSource">
+		class="com.xlg.pagination.ProxyDataSource" primary="true">
 		<property name="dataSource" ref="${delegate.datasource}"></property>
 	</bean>
 	
