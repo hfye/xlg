@@ -45,8 +45,12 @@
 		<dependency org="org.postgresql" name="postgresql" rev="42.0.0"/>
 		<dependency org="commons-lang" name="commons-lang" rev="2.6"/>
 		<dependency org="org.aspectj" name="aspectjweaver" rev="1.8.10" />
-		<dependency org="com.microsoft.sqlserver" name="mssql-jdbc" rev="6.1.0.jre8"/>
+		<dependency org="com.microsoft.sqlserver" name="mssql-jdbc" rev="6.1.0.jre8">
+			<exclude org="org.apache.httpcomponents" name="httpclient" rev="4.3.6" />
+		</dependency>
+		<dependency org="org.apache.httpcomponents" name="httpclient" rev="4.5.3" />
 		<exclude org="ch.qos.logback" name="logback-classic"/>
 		<exclude org="ch.qos.logback" name="logback-core"/>
+		
 	</dependencies>
 </ivy-module>

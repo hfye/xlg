@@ -2,10 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+		
     <context:component-scan base-package="com.xlg.pagination"/>
     
 	<import resource="classpath:META-INF/pagination.xml"/>
@@ -51,4 +55,16 @@
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource"/>
 	</bean>
+	
+	<bean id="defautlSizePaginationAdvice" class="com.xlg.pagination.PaginationAdvice">
+		<property name="pageSize" value="${default.page.size}"></property>
+	</bean>
+	
+	<aop:config>
+		<aop:aspect ref="defautlSizePaginationAdvice">
+			<aop:around
+				pointcut="execution(* *.*.*.I*Dao.selectAll(..))"
+				method="paginate"/>
+		</aop:aspect>
+	</aop:config>
 </beans>

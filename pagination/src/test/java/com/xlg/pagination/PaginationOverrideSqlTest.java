@@ -13,8 +13,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
@@ -24,8 +24,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:META-INF/pagination_test.xml"})
 @SpringBootTest
+@ImportResource(locations={"classpath:META-INF/pagination_test.xml"})
 public class PaginationOverrideSqlTest {
 	private static final Log LOG = LogFactory.getLog(PaginationOverrideSqlTest.class);
 
@@ -37,6 +37,9 @@ public class PaginationOverrideSqlTest {
 	
 	@Autowired
 	ITestTableDao testTableDao;
+	
+//	@Autowired
+//	private TestRestTemplate restTemplate;
 	
 	@Before
 	public void setUp() {
@@ -94,4 +97,10 @@ public class PaginationOverrideSqlTest {
 			LOG.debug("testPaging end");
 		}
 	}
+	
+//	@Test
+//	public void testRestfulApi() {
+//		String resultResponse = this.restTemplate.getForObject("/getTestTable", String.class);
+//		LOG.debug(String.format("resultResponse: %1", resultResponse));
+//	}
 }
