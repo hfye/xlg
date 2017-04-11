@@ -20,6 +20,12 @@ public class SqlServerOverrideSql implements IOverrideSql {
 			+ "select *, row_number() over(%1$s) as rowNumber from (%2$s) numbered"
 			+ ") numberedProj "
 			+ "where rowNumber > %3$d and rowNumber <= %4$d";
+	
+	private String totalQuery = ""
+			+ "select count(*) as __totalCount from ("
+			+ "%1$s"
+			+ ") numberedProj ";
+
 	private static final Pattern orderByClausePattern = Pattern.compile("order\\sby.+$", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL); 
 
 	@Override
@@ -38,6 +44,24 @@ public class SqlServerOverrideSql implements IOverrideSql {
 			LOG.debug("Override Sql: " + overrideSql);
 		}
 		return overrideSql;
+	}
+	
+	@Override
+	public String totalSql(String sql) {
+		PagingConfig paging = PagingConfig.getPagingConfig();
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Paging config: " + paging);
+		}
+		String totalSql = new String(sql);
+		if (paging != null && paging.toPaginate() && paging.isIncludeTotal()) {
+			String orderByClause = orderByClause(sql);
+			String stripOrderByClause = stripOrderByClause(sql, orderByClause);
+			totalSql = String.format(totalQuery, stripOrderByClause);
+		}
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("total Sql: " + totalSql);
+		}
+		return totalSql;
 	}
 	
 	private String orderByClause(String sql) {

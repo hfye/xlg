@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 public class Db2OverrideSql implements IOverrideSql {
 	private static final Log LOG = LogFactory.getLog(Db2OverrideSql.class);
 	private String limitQuery = "FETCH FIRST %d ROWS ONLY OPTIMIZE FOR %d ROWS";
+	private String totalQuery = "select count(*) as __totalCount from (%1$s) __totalSql";
 
 	@Override
 	public String overrideSql(String sql) {
@@ -30,6 +31,24 @@ public class Db2OverrideSql implements IOverrideSql {
 		}
 		return overrideSql;
 	}
+	
+	@Override
+	public String totalSql(String sql) {
+		PagingConfig paging = PagingConfig.getPagingConfig();
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Paging config: " + paging);
+		}
+		String totalSql = new String(sql);
+		if (paging != null && paging.toPaginate() && paging.isIncludeTotal()) {
+			totalSql = String.format(totalQuery, sql);
+		}
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Total Sql: " + totalSql);
+		}
+		return totalSql;
+	}
+
+
 
 	@Override
 	public ResultSet scrollResultSet(ResultSet rs) throws SQLException {

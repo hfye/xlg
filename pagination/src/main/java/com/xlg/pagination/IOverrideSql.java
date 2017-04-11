@@ -19,6 +19,13 @@ public interface IOverrideSql {
 
 	/**
 	 * 
+	 * @param sql	the sql to intercept and override with total count
+	 * @return		return a sql with total count
+	 */
+	public abstract String totalSql(String sql);
+	
+	/**
+	 * 
 	 * @param rs
 	 * @return
 	 * @throws SQLException

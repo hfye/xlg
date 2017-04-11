@@ -19,6 +19,11 @@ public class PaginationAdvice {
 	private int pageSize = 0;
 	
 	/**
+	 * To include total no of record.
+	 */
+	private boolean includeTotal = false;
+	
+	/**
 	 * @return the pageSize
 	 */
 	public int getPageSize() {
@@ -32,15 +37,25 @@ public class PaginationAdvice {
 		this.pageSize = pageSize;
 	}
 	
+	public boolean isIncludeTotal() {
+		return includeTotal;
+	}
+
+	public void setIncludeTotal(boolean includeTotal) {
+		this.includeTotal = includeTotal;
+	}
+
 	public Object paginate(ProceedingJoinPoint pjp) throws Throwable {
 		PagingConfig pagingConfig = PagingConfig.getPagingConfig();
 		if (pagingConfig != null) {
 			pagingConfig.setPaginate(true);
 			pagingConfig.setPageSize(pageSize);
+			pagingConfig.setIncludeTotal(includeTotal);
 		}
 		Object retVal = pjp.proceed();
 		if (pagingConfig != null) {
 			pagingConfig.setPaginate(false);
+			pagingConfig.setIncludeTotal(false);;
 		}
 		return retVal;
 	}

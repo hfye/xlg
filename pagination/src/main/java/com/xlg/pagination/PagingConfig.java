@@ -7,8 +7,10 @@ package com.xlg.pagination;
  */
 public class PagingConfig {
 	private boolean paginate = false;
+	private boolean includeTotal = false;
 	private int pageIndex = 0; //Start from 1
 	private int pageSize = 0;
+	private int total = 0;
 	private static final ThreadLocal<PagingConfig> paginationProperties = new ThreadLocal<PagingConfig>();
 	
 	public boolean toPaginate() {
@@ -44,6 +46,14 @@ public class PagingConfig {
 		this.paginate = paginate;
 	}
 	
+	public boolean isIncludeTotal() {
+		return includeTotal;
+	}
+
+	public void setIncludeTotal(boolean includeTotal) {
+		this.includeTotal = includeTotal;
+	}
+
 	/**
 	 * @return the pageIndex
 	 */
@@ -71,6 +81,14 @@ public class PagingConfig {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -78,7 +96,7 @@ public class PagingConfig {
 	@Override
 	public String toString() {
 		return "Paging [pageIndex=" + pageIndex + ", pageSize=" + pageSize
-				+ ", paginate=" + paginate + "]";
+				+ ", paginate=" + paginate + ", includeTotal=" + includeTotal + ", total=" + total + "]";
 	}
 
 	public static void setPagingConfig(PagingConfig pagingConfig) {
