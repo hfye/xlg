@@ -56,4 +56,21 @@ public class PaginationContainerTest {
 			Assert.fail(e.getMessage());
 		}
 	}
+
+	@Test
+	public void testPaginatedResponseRestfulApi() {
+		try {
+			int page = 2;
+			String resultResponse = this.restTemplate.getForObject("http://localhost:" + port + "/getPaginatedTestTable?page=" + page, String.class);
+			LOG.debug(String.format("resultResponse: %1s", resultResponse));
+			ObjectMapper jsonMapper = new ObjectMapper();
+			PaginatedResponse<List<TestTableDto>> results = jsonMapper.readValue(resultResponse, new TypeReference<PaginatedResponse<List<TestTableDto>>>(){});
+			Assert.assertTrue(results.getPageSize() == pageSize);
+			Assert.assertTrue(results.getPageIndex() == page);
+			Assert.assertTrue(results.getData().get(0).getTestId() == ((page - 1) * pageSize) + 1);
+			Assert.assertTrue(results.getData().get(results.getData().size() - 1).getTestId() == (page * pageSize));
+		} catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
 }
